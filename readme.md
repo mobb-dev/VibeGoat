@@ -1,4 +1,4 @@
-# 🐐 UnsafeBanking — AI-Generated Vulnerable Application Prompt
+# 🏦 UnsafeBanking — AI-Generated Vulnerable Application Prompt
 
 **UnsafeBanking** is a companion project inspired by [AltoroJ](https://github.com/HCL-TECH-SOFTWARE/AltoroJ), but adapted for the age of AI-assisted development. Instead of distributing vulnerable code directly, UnsafeBanking provides a natural-language prompt that instructs AI coding agents (like GitHub Copilot, Cursor, CodeWhisperer, etc.) to generate a vulnerable application from scratch.
 
