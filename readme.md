@@ -165,11 +165,4 @@ You can also ask for explanations:
 Explain the risks associated with each issue Mobb found in this project.
 ```
 
----
-
-## 🧬 Attribution
-
-Inspired by OWASP's [WebGoat](https://owasp.org/www-project-webgoat/), but designed for the AI era. Built to support testing with **Mobb**, a platform for automated vulnerability remediation.
-
----
 
