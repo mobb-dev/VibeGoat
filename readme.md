@@ -2,7 +2,7 @@
 
 **AIGoat** is a companion project inspired by [WebGoat](https://owasp.org/www-project-webgoat/), but adapted for the age of AI-assisted development. Instead of distributing vulnerable code directly, AIGoat provides a natural-language prompt that instructs AI coding agents (like GitHub Copilot, Cursor, CodeWhisperer, etc.) to generate a vulnerable application from scratch.
 
-This allows users to explore and test how AI agents can accidentally introduce insecure patterns, and how modern security tools like **Mobb Vibe Shield (MVS)** can detect and fix them.
+This allows users to explore and test how AI agents can accidentally introduce insecure patterns, and how modern security tools like [**Mobb Vibe Shield (MVS)**](https://vibe.mobb.ai) can detect and fix them.
 
 ---
 
