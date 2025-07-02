@@ -165,4 +165,9 @@ You can also ask for explanations:
 Explain the risks associated with each issue Mobb found in this project.
 ```
 
+**Troubleshooting**
 
+Sometimes you may need to be a bit more specific on ensuring the AI is calling upon the correct Mobb MCP tool you intend to use. For instance, if you want to use `scan_and_fix_vulnerabilities`, you may need to be more explicit. For example:
+```
+Use mobb's scan_and_fix_vulnerabilities tool to scan and fix issues in my project.
+```
