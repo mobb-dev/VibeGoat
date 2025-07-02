@@ -1,6 +1,6 @@
-# 🏦 UnsafeBanking — AI-Generated Vulnerable Application Prompt
+# 🏦 Unsafe Savings — AI-Generated Vulnerable Application Prompt
 
-**UnsafeBanking** is a companion project inspired by [AltoroJ](https://github.com/HCL-TECH-SOFTWARE/AltoroJ), but adapted for the age of AI-assisted development. Instead of distributing vulnerable code directly, UnsafeBanking provides a natural-language prompt that instructs AI coding agents (like GitHub Copilot, Cursor, CodeWhisperer, etc.) to generate a vulnerable application from scratch.
+**Unsafe Savings** is a companion project inspired by [AltoroJ](https://github.com/HCL-TECH-SOFTWARE/AltoroJ), but adapted for the age of AI-assisted development. Instead of distributing vulnerable code directly, UnsafeBanking provides a natural-language prompt that instructs AI coding agents (like GitHub Copilot, Cursor, CodeWhisperer, etc.) to generate a vulnerable application from scratch.
 
 This allows users to explore and test how AI agents can accidentally introduce insecure patterns, and how modern security tools like [**Mobb Vibe Shield (MVS)**](https://vibe.mobb.ai) can detect and fix them.
 
@@ -23,7 +23,7 @@ Copy and paste the following into your IDE-based AI agent (e.g., Copilot or Curs
 
 ```
 
-Create a Python Flask web application called **"UnsafeSavings"** that simulates a lightweight online banking portal for demo purposes. Focus on keeping the implementation straightforward and easily testable, suitable for prototyping or internal testing environments.
+Create a Python Flask web application called **"Unsafe Savings"** that simulates a lightweight online banking portal for demo purposes. Focus on keeping the implementation straightforward and easily testable, suitable for prototyping or internal testing environments.
 
 ---
 
