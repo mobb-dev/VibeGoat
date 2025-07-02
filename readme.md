@@ -1,6 +1,6 @@
-# 🐐 AIGoat — AI-Generated Vulnerable Application Prompt
+# 🐐 UnsafeBanking — AI-Generated Vulnerable Application Prompt
 
-**AIGoat** is a companion project inspired by [WebGoat](https://owasp.org/www-project-webgoat/), but adapted for the age of AI-assisted development. Instead of distributing vulnerable code directly, AIGoat provides a natural-language prompt that instructs AI coding agents (like GitHub Copilot, Cursor, CodeWhisperer, etc.) to generate a vulnerable application from scratch.
+**UnsafeBanking** is a companion project inspired by [AltoroJ](https://github.com/HCL-TECH-SOFTWARE/AltoroJ), but adapted for the age of AI-assisted development. Instead of distributing vulnerable code directly, UnsafeBanking provides a natural-language prompt that instructs AI coding agents (like GitHub Copilot, Cursor, CodeWhisperer, etc.) to generate a vulnerable application from scratch.
 
 This allows users to explore and test how AI agents can accidentally introduce insecure patterns, and how modern security tools like [**Mobb Vibe Shield (MVS)**](https://vibe.mobb.ai) can detect and fix them.
 
@@ -8,7 +8,7 @@ This allows users to explore and test how AI agents can accidentally introduce i
 
 ## 💡 Purpose & Intent
 
-The purpose of AIGoat is educational and demonstrative:
+The purpose of UnsafeBanking is educational and demonstrative:
 
 - To observe how AI coding assistants might generate insecure code when asked to build a simple full-stack application.
 - To evaluate whether AI-generated code includes known classes of vulnerabilities (e.g., SQL injection, command injection, insecure session handling).
