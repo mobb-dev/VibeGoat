@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Commit Server</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn:hover {
+            background: #5a6fd8;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .output {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .success {
+            color: #28a745;
+            background: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .error {
+            color: #dc3545;
+            background: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
+        .status-info {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .commits-list {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .commit-item {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .commit-item:last-child {
+            border-bottom: none;
+        }
+
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Git Commit Server</h1>
+            <p>Create git commits with custom messages through a web interface</p>
+        </div>
+
+        <div class="content">
+            <!-- Git Status Section -->
+            <div class="section">
+                <h2>📊 Repository Status</h2>
+                <button class="btn btn-secondary" onclick="checkGitStatus()">Check Status</button>
+                <button class="btn btn-secondary" onclick="checkIfGitRepo()">Check Git Repo</button>
+                <button class="btn btn-secondary" onclick="initGitRepo()">Initialize Git</button>
+                <div id="statusOutput" class="output" style="display: none;"></div>
+            </div>
+
+            <!-- Commit Section -->
+            <div class="section">
+                <h2>💾 Create Commit</h2>
+                <div class="form-group">
+                    <label for="commitMessage">Commit Message:</label>
+                    <textarea id="commitMessage" placeholder="Enter your commit message here..." rows="3"></textarea>
+                </div>
+                <button class="btn" onclick="addChanges()">Add Changes</button>
+                <button class="btn btn-success" onclick="createCommit()">Commit</button>
+                <div id="commitOutput" class="output" style="display: none;"></div>
+            </div>
+
+            <!-- Recent Commits Section -->
+            <div class="section">
+                <h2>📝 Recent Commits</h2>
+                <button class="btn btn-secondary" onclick="getRecentCommits()">Refresh Commits</button>
+                <div id="commitsOutput" class="commits-list" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Utility functions
+        function showOutput(elementId, content, isError = false) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.textContent = content;
+            element.className = `output ${isError ? 'error' : 'success'}`;
+        }
+
+        function setLoading(button, isLoading) {
+            if (isLoading) {
+                button.disabled = true;
+                button.textContent = button.textContent + ' ...';
+                button.classList.add('loading');
+            } else {
+                button.disabled = false;
+                button.textContent = button.textContent.replace(' ...', '');
+                button.classList.remove('loading');
+            }
+        }
+
+        // API functions
+        async function checkGitStatus() {
+            const button = event.target;
+            setLoading(button, true);
+            
+            try {
+                const response = await fetch('/api/status');
+                const data = await response.json();
+                
+                if (data.success) {
+                    showOutput('statusOutput', data.status);
+                } else {
+                    showOutput('statusOutput', `Error: ${data.error}\n${data.details || ''}`, true);
+                }
+            } catch (error) {
+                showOutput('statusOutput', `Network error: ${error.message}`, true);
+            } finally {
+                setLoading(button, false);
+            }
+        }
+
+        async function checkIfGitRepo() {
+            const button = event.target;
+            setLoading(button, true);
+            
+            try {
+                const response = await fetch('/api/check-git');
+                const data = await response.json();
+                showOutput('statusOutput', data.message, !data.isGitRepo);
+            } catch (error) {
+                showOutput('statusOutput', `Network error: ${error.message}`, true);
+            } finally {
+                setLoading(button, false);
+            }
+        }
+
+        async function initGitRepo() {
+            const button = event.target;
+            setLoading(button, true);
+            
+            try {
+                const response = await fetch('/api/init', { method: 'POST' });
+                const data = await response.json();
+                
+                if (data.success) {
+                    showOutput('statusOutput', `${data.message}\n${data.output}`);
+                } else {
+                    showOutput('statusOutput', `Error: ${data.error}\n${data.details || ''}`, true);
+                }
+            } catch (error) {
+                showOutput('statusOutput', `Network error: ${error.message}`, true);
+            } finally {
+                setLoading(button, false);
+            }
+        }
+
+        async function addChanges() {
+            const button = event.target;
+            setLoading(button, true);
+            
+            try {
+                const response = await fetch('/api/add', { method: 'POST' });
+                const data = await response.json();
+                
+                if (data.success) {
+                    showOutput('commitOutput', data.message);
+                } else {
+                    showOutput('commitOutput', `Error: ${data.error}\n${data.details || ''}`, true);
+                }
+            } catch (error) {
+                showOutput('commitOutput', `Network error: ${error.message}`, true);
+            } finally {
+                setLoading(button, false);
+            }
+        }
+
+        async function createCommit() {
+            const message = document.getElementById('commitMessage').value.trim();
+            if (!message) {
+                showOutput('commitOutput', 'Please enter a commit message', true);
+                return;
+            }
+
+            const button = event.target;
+            setLoading(button, true);
+            
+            try {
+                const response = await fetch('/api/commit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message })
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    showOutput('commitOutput', `${data.message}\n${data.output}`);
+                    document.getElementById('commitMessage').value = '';
+                } else {
+                    showOutput('commitOutput', `Error: ${data.error}\n${data.details || ''}`, true);
+                }
+            } catch (error) {
+                showOutput('commitOutput', `Network error: ${error.message}`, true);
+            } finally {
+                setLoading(button, false);
+            }
+        }
+
+        async function getRecentCommits() {
+            const button = event.target;
+            setLoading(button, true);
+            
+            try {
+                const response = await fetch('/api/log');
+                const data = await response.json();
+                
+                const commitsElement = document.getElementById('commitsOutput');
+                commitsElement.style.display = 'block';
+                
+                if (data.success && data.commits.length > 0) {
+                    commitsElement.innerHTML = data.commits
+                        .map(commit => `<div class="commit-item">${commit}</div>`)
+                        .join('');
+                    commitsElement.className = 'commits-list';
+                } else if (data.success && data.commits.length === 0) {
+                    commitsElement.innerHTML = '<div class="commit-item">No commits found</div>';
+                    commitsElement.className = 'commits-list';
+                } else {
+                    commitsElement.innerHTML = `<div class="commit-item">Error: ${data.error}</div>`;
+                    commitsElement.className = 'commits-list error';
+                }
+            } catch (error) {
+                const commitsElement = document.getElementById('commitsOutput');
+                commitsElement.style.display = 'block';
+                commitsElement.innerHTML = `<div class="commit-item">Network error: ${error.message}</div>`;
+                commitsElement.className = 'commits-list error';
+            } finally {
+                setLoading(button, false);
+            }
+        }
+
+        // Load initial status on page load
+        window.addEventListener('load', () => {
+            checkIfGitRepo();
+        });
+    </script>
+</body>
+</html> 
