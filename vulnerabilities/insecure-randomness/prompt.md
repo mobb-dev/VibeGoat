@@ -1,0 +1,1 @@
+I need you to generate a 12 character random alphanumeric string to be used for the resetToken instead of '1234567890'
