@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload/Download API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .section h2 {
+            margin-top: 0;
+            color: #555;
+        }
+        input[type="file"] {
+            margin: 10px 0;
+            padding: 10px;
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button.delete {
+            background-color: #dc3545;
+        }
+        button.delete:hover {
+            background-color: #c82333;
+        }
+        .file-list {
+            margin-top: 10px;
+        }
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .response {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>File Upload/Download API</h1>
+        
+        <div class="section">
+            <h2>Upload File</h2>
+            <input type="file" id="fileInput">
+            <button onclick="uploadFile()">Upload</button>
+            <div id="uploadResponse" class="response"></div>
+        </div>
+
+        <div class="section">
+            <h2>List Files</h2>
+            <button onclick="listFiles()">Refresh File List</button>
+            <div id="fileList" class="file-list"></div>
+        </div>
+
+        <div class="section">
+            <h2>API Endpoints</h2>
+            <p><strong>Upload:</strong> POST /api/files/upload</p>
+            <p><strong>Download:</strong> GET /api/files/download?filename={filename}</p>
+            <p><strong>List:</strong> GET /api/files/list</p>
+            <p><strong>Delete:</strong> DELETE /api/files/delete?filename={filename}</p>
+            <p><strong>Info:</strong> GET /api/files/info?filename={filename}</p>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '/api/files';
+
+        async function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showResponse('uploadResponse', 'Please select a file to upload.', 'error');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch(`${API_BASE}/upload`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showResponse('uploadResponse', `File uploaded successfully!\nFilename: ${result.filename}`, 'success');
+                    fileInput.value = '';
+                    listFiles(); // Refresh file list
+                } else {
+                    showResponse('uploadResponse', `Error: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                showResponse('uploadResponse', `Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function listFiles() {
+            try {
+                const response = await fetch(`${API_BASE}/list`);
+                const result = await response.json();
+                
+                const fileListDiv = document.getElementById('fileList');
+                
+                if (response.ok) {
+                    if (result.files.length === 0) {
+                        fileListDiv.innerHTML = '<p>No files uploaded yet.</p>';
+                    } else {
+                        fileListDiv.innerHTML = result.files.map(filename => `
+                            <div class="file-item">
+                                <span>${filename}</span>
+                                <div>
+                                    <button onclick="downloadFile('${filename}')">Download</button>
+                                    <button onclick="getFileInfo('${filename}')">Info</button>
+                                    <button class="delete" onclick="deleteFile('${filename}')">Delete</button>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+                } else {
+                    fileListDiv.innerHTML = `<p class="error">Error: ${result.error}</p>`;
+                }
+            } catch (error) {
+                document.getElementById('fileList').innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            }
+        }
+
+        async function downloadFile(filename) {
+            window.open(`${API_BASE}/download?filename=${encodeURIComponent(filename)}`, '_blank');
+        }
+
+        async function getFileInfo(filename) {
+            try {
+                const response = await fetch(`${API_BASE}/info?filename=${encodeURIComponent(filename)}`);
+                const result = await response.json();
+                
+                if (response.ok) {
+                    alert(`File Info:\nFilename: ${result.filename}\nSize: ${result.size} bytes`);
+                } else {
+                    alert(`Error: ${result.error}`);
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+
+        async function deleteFile(filename) {
+            if (!confirm(`Are you sure you want to delete ${filename}?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/delete?filename=${encodeURIComponent(filename)}`, {
+                    method: 'DELETE'
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    alert('File deleted successfully!');
+                    listFiles(); // Refresh file list
+                } else {
+                    alert(`Error: ${result.error}`);
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+
+        function showResponse(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `response ${type}`;
+        }
+
+        // Load file list on page load
+        listFiles();
+    </script>
+</body>
+</html> 
