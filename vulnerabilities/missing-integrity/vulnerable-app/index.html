@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Takeout Alternatives - Flow Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .mermaid-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .description {
+            background: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .description h3 {
+            color: #155724;
+            margin-bottom: 10px;
+        }
+
+        .description p {
+            color: #155724;
+            line-height: 1.6;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #6c757d;
+            border-top: 1px solid #dee2e6;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .mermaid-container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍽️ Food Takeout Alternatives</h1>
+            <p>Explore different options for your next meal decision</p>
+        </div>
+        
+        <div class="content">
+            <div class="description">
+                <h3>📋 Decision Flow</h3>
+                <p>This flow diagram helps you navigate through various food takeout alternatives based on your preferences, budget, and time constraints. Follow the arrows to discover your best option!</p>
+            </div>
+            
+            <div class="mermaid-container">
+                <div class="mermaid">
+                    flowchart TD
+                        A[🍕 Hungry?] --> B{Time Available?}
+                        B -->|Yes| C{Want to Cook?}
+                        B -->|No| D[🚗 Order Takeout]
+                        
+                        C -->|Yes| E{Have Ingredients?}
+                        C -->|No| F[🍽️ Go to Restaurant]
+                        
+                        E -->|Yes| G[👨‍🍳 Cook at Home]
+                        E -->|No| H[🛒 Go Grocery Shopping]
+                        
+                        H --> I[👨‍🍳 Cook at Home]
+                        
+                        D --> J{Choose Cuisine}
+                        J --> K[🍕 Pizza Delivery]
+                        J --> L[🍜 Asian Food]
+                        J --> M[🍔 Fast Food]
+                        J --> N[🥗 Healthy Options]
+                        J --> O[🍣 Sushi]
+                        J --> P[🌮 Mexican Food]
+                        
+                        K --> Q[💰 Budget Check]
+                        L --> Q
+                        M --> Q
+                        N --> Q
+                        O --> Q
+                        P --> Q
+                        
+                        Q -->|High Budget| R[⭐ Premium Delivery]
+                        Q -->|Low Budget| S[💸 Budget-Friendly Option]
+                        Q -->|Medium Budget| T[⚖️ Standard Delivery]
+                        
+                        F --> U[🎉 Enjoy Your Meal!]
+                        G --> U
+                        I --> U
+                        R --> U
+                        S --> U
+                        T --> U
+                        
+                        style A fill:#ff6b6b,stroke:#333,stroke-width:2px,color:#fff
+                        style U fill:#28a745,stroke:#333,stroke-width:2px,color:#fff
+                        style D fill:#17a2b8,stroke:#333,stroke-width:2px,color:#fff
+                        style F fill:#ffc107,stroke:#333,stroke-width:2px,color:#333
+                        style G fill:#28a745,stroke:#333,stroke-width:2px,color:#fff
+                        style H fill:#6f42c1,stroke:#333,stroke-width:2px,color:#fff
+                        style Q fill:#fd7e14,stroke:#333,stroke-width:2px,color:#fff
+                </div>
+            </div>
+            
+            <div class="description">
+                <h3>💡 Tips for Each Option</h3>
+                <p><strong>🍕 Pizza Delivery:</strong> Great for groups, quick delivery, many toppings available</p>
+                <p><strong>🍜 Asian Food:</strong> Variety of cuisines, often healthy options, good for dietary restrictions</p>
+                <p><strong>🍔 Fast Food:</strong> Quickest option, budget-friendly, convenient locations</p>
+                <p><strong>🥗 Healthy Options:</strong> Better nutrition, often organic ingredients, good for fitness goals</p>
+                <p><strong>🍣 Sushi:</strong> Fresh ingredients, elegant dining, good for special occasions</p>
+                <p><strong>🌮 Mexican Food:</strong> Bold flavors, vegetarian options, family-friendly</p>
+                <p><strong>👨‍🍳 Cook at Home:</strong> Healthiest option, cost-effective, full control over ingredients</p>
+                <p><strong>🍽️ Restaurant Dining:</strong> Social experience, no cleanup, professional cooking</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Made with ❤️ using Mermaid.js | Food Takeout Decision Helper</p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html> 
