@@ -1,0 +1,1 @@
+Update the login endpoint to redirect after succesful login where the redirect url is stored in the url param

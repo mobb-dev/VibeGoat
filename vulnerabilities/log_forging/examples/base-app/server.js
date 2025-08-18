@@ -59,13 +59,11 @@ app.post("/login", loginLimiter, async (req, res) => {
 
   const user = users.find((u) => u.username === username);
   if (!user) {
-    console.log("Failed login attempt - user not found:", username, "from IP:", req.ip);
     return res.status(401).json({ error: "Invalid credentials" });
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
-    console.log("Failed login attempt - invalid password:", username, "from IP:", req.ip);
     return res.status(401).json({ error: "Invalid credentials" });
   }
 
